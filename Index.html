@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Ranker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: #fff;
+            padding: 35px 45px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .section-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .section-box h3 {
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .results {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .results h2 {
+            font-size: 20px;
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .results ol {
+            padding-left: 20px;
+        }
+
+        .results li {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🤖 AI Resume Ranker</h1>
+        <form method="POST" enctype="multipart/form-data">
+
+            <div class="section-box">
+                <h3>📄 Job Description (PDF or TXT)</h3>
+                <input type="file" name="jd_file" accept=".pdf,.txt" required>
+            </div>
+
+            <div class="section-box">
+                <h3>📁 Upload Resumes (PDF only)</h3>
+                <input type="file" name="resume_files" multiple accept=".pdf" required>
+            </div>
+
+            <button type="submit">Rank Resumes</button>
+        </form>
+
+        {% if results %}
+        <div class="results">
+            <h2>📊 Ranking Results</h2>
+            <ol>
+                {% for name, score in results %}
+                    <li>{{ name }} — Match: {{ "%.0f"|format(score * 100) }}%</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
